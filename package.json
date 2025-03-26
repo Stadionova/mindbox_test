@@ -1,0 +1,11 @@
+{
+  "homepage": "https://Stadionova.github.io/mindbox_test",
+  "name": "mindbox",
+  "version": "1.0.0",
+  "dependencies": {
+  },
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  }
+}
