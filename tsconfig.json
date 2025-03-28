@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
+    "paths": {
+      "entities": [
+        "src/entities"
+      ]
+    },
     "target": "ES6",
     "jsx": "react",
     "moduleResolution": "node",

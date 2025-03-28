@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 
-import cn from './Main.module.scss';
+import {ToDoItemsList} from "../../entities";
+import {Input, Title} from "shared";
 
 export const Main = () => {
     const [list, setList] = useState<string[]>([])
@@ -13,29 +14,11 @@ export const Main = () => {
         }
     }
 
-    const EachToDoItem = ({index, item}: { index: number, item: string }) => {
-        const [isItemChecked, setItemChecked] = useState<boolean>(false)
-        return (
-            <div className={cn.item}
-                 onClick={() => isItemChecked ? setItemChecked(false) : setItemChecked(true)}>
-                <input type="radio" name="radioGroup" checked={isItemChecked}/>
-                <div key={index}>{item}</div>
-            </div>
-        )
-    }
-
     return (
         <div>
-            <h1>todos</h1>
-            <input
-                placeholder="What needs to be done?"
-                value={inputValue}
-                onInput={(event) => setInputValue(event.currentTarget.value)}
-                onKeyDown={(event) => onEnterClick(event)}
-            />
-            <div>
-                {list.map((item: string, index: number) => <EachToDoItem item={item} index={index}/>)}
-            </div>
+            <Title text='todos'/>
+            <Input setValue={setInputValue} value={inputValue} onClick={onEnterClick}/>
+            <ToDoItemsList list={list}/>
         </div>
     );
 };
