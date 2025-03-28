@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 
+import cn from './Main.module.scss';
+
 export const Main = () => {
     const [list, setList] = useState<string[]>([])
     const [inputValue, setInputValue] = useState<string>('')
@@ -9,6 +11,17 @@ export const Main = () => {
             setList([...list, inputValue])
             setInputValue('')
         }
+    }
+
+    const EachToDoItem = ({index, item}: { index: number, item: string }) => {
+        const [isItemChecked, setItemChecked] = useState<boolean>(false)
+        return (
+            <div className={cn.item}
+                 onClick={() => isItemChecked ? setItemChecked(false) : setItemChecked(true)}>
+                <input type="radio" name="radioGroup" checked={isItemChecked}/>
+                <div key={index}>{item}</div>
+            </div>
+        )
     }
 
     return (
@@ -21,9 +34,7 @@ export const Main = () => {
                 onKeyDown={(event) => onEnterClick(event)}
             />
             <div>
-                {list.map((item: string, index: number) => {
-                    return <div key={index}>{`${index + 1}. ${item}`}</div>;
-                })}
+                {list.map((item: string, index: number) => <EachToDoItem item={item} index={index}/>)}
             </div>
         </div>
     );
