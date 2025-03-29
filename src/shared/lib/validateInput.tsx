@@ -1,0 +1,1 @@
+export const validateInput = (value: string) => value.length > 0 && value.trim() !== ''

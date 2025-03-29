@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import {ToDoItemsList} from "../../entities";
-import {Input, Title} from "shared";
+import {Input, Title, validateInput} from "shared";
 
 export const Main = () => {
     const [list, setList] = useState<string[]>([])
@@ -9,7 +9,7 @@ export const Main = () => {
 
     const onEnterClick = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
-            setList([...list, inputValue])
+            validateInput(inputValue) && setList([...list, inputValue])
             setInputValue('')
         }
     }

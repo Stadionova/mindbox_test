@@ -3,3 +3,8 @@ export interface InputProps {
     setValue: (value: string) => void,
     onClick: (event: any) => void
 }
+
+export interface EachToDoItemProps {
+    index: number,
+    item: string
+}
