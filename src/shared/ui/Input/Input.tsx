@@ -6,7 +6,7 @@ import cn from "./Input.module.scss";
 
 export const Input = ({value, setValue, onClick}: InputProps) => {
     return (
-        <div className={cn.input}>
+        <div className={cn.inputWrapper}>
             <input
                 placeholder="What needs to be done?"
                 value={value}

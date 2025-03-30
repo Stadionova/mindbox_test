@@ -1,3 +1,5 @@
+import {FilterStatuses} from "shared";
+
 export interface InputProps {
     value: string,
     setValue: (value: string) => void,
@@ -5,6 +7,18 @@ export interface InputProps {
 }
 
 export interface EachToDoItemProps {
-    index: number,
-    item: string
+    id: number,
+    item: ItemProps,
+    setList: (value: any) => void,
+    list: Array<ItemProps>
+}
+
+export interface ItemProps {
+    value: string,
+    status: FilterStatuses
+}
+
+export interface ToDoItemsListProps {
+    list: Array<ItemProps>,
+    setList: (value: any) => void
 }

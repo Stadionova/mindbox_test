@@ -1,18 +1,37 @@
-import React, {useState} from "react";
+import React from "react";
 
 import {EachToDoItemProps} from "shared/types/types";
+import {FilterStatuses} from "shared";
 
 import cn from "./EachToDoItem.module.scss";
 
-export const EachToDoItem = ({index, item}: EachToDoItemProps) => {
-    const [isItemChecked, setItemChecked] = useState<boolean>(false)
+export const EachToDoItem = ({id, item, setList, list}: EachToDoItemProps) => {
 
-    const onItemClick = () => isItemChecked ? setItemChecked(false) : setItemChecked(true)
+    const status = item.status
+    const value = item.value
+
+    const filterItemStatus = (status: FilterStatuses) => {
+        return status === FilterStatuses.COMPLETED ? FilterStatuses.ACTIVE : FilterStatuses.COMPLETED
+    }
+
+    const onItemClick = () => {
+        const updatedList = list.map((item, index) => {
+                if (index === id) {
+                    return {...item, status: filterItemStatus(status)}
+                } else {
+                    return item
+                }
+            }
+        );
+        setList(updatedList);
+    };
 
     return (
         <div className={cn.item} onClick={onItemClick}>
-            <input type="radio" onChange={onItemClick} checked={isItemChecked}/>
-            <div className={isItemChecked ? cn.text : ''} key={index}>{item}</div>
+            <input type="radio" onChange={onItemClick} checked={status === FilterStatuses.COMPLETED}/>
+            <div className={status === FilterStatuses.COMPLETED ? cn.text : ''}>
+                {value}
+            </div>
         </div>
-    )
-}
+    );
+};
