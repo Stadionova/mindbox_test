@@ -1,3 +1,5 @@
 import React from "react";
 
-export const Title = ({text}: { text: string }) => <h1>{text}</h1>
+import cn from "./Title.module.scss";
+
+export const Title = ({text}: { text: string }) => <h1 className={cn.title}>{text}</h1>

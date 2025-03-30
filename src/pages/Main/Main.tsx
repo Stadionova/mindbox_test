@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 
 import {ToDoItemsList} from "../../entities";
 import {Input, Title, validateInput} from "shared";
+import {Filters} from "features";
+
+import cn from "./Main.module.scss";
 
 export const Main = () => {
     const [list, setList] = useState<string[]>([])
@@ -15,10 +18,11 @@ export const Main = () => {
     }
 
     return (
-        <div>
+        <div className={cn.main}>
             <Title text='todos'/>
             <Input setValue={setInputValue} value={inputValue} onClick={onEnterClick}/>
             <ToDoItemsList list={list}/>
+            <Filters/>
         </div>
     );
 };
