@@ -1,15 +1,15 @@
 import React from "react";
 
-import {Button} from "shared";
+import {Button, FilterStatuses} from "shared";
 
 import cn from "./Filters.module.scss";
 
-export const Filters = () => {
+export const Filters = ({onFilterClick}: { onFilterClick: (status: string) => void }) => {
     return (
         <div className={cn.itemsStatus}>
-            <Button text='ALL'/>
-            <Button text='ACTIVE'/>
-            <Button text='COMPLETED'/>
+            {Object.values(FilterStatuses).map((status: string) => (
+                <Button onClick={() => onFilterClick(status)} key={status} text={status}/>
+            ))}
         </div>
     )
 }

@@ -5,32 +5,16 @@ import {FilterStatuses} from "shared";
 
 import cn from "./EachToDoItem.module.scss";
 
-export const EachToDoItem = ({id, item, setList, list}: EachToDoItemProps) => {
-
-    const status = item.status
-    const value = item.value
-
-    const filterItemStatus = (status: FilterStatuses) => {
-        return status === FilterStatuses.COMPLETED ? FilterStatuses.ACTIVE : FilterStatuses.COMPLETED
-    }
-
-    const onItemClick = () => {
-        const updatedList = list.map((item, index) => {
-                if (index === id) {
-                    return {...item, status: filterItemStatus(status)}
-                } else {
-                    return item
-                }
-            }
-        );
-        setList(updatedList);
-    };
-
+export const EachToDoItem = ({item, onStatusChange}: EachToDoItemProps) => {
     return (
-        <div className={cn.item} onClick={onItemClick}>
-            <input type="radio" onChange={onItemClick} checked={status === FilterStatuses.COMPLETED}/>
-            <div className={status === FilterStatuses.COMPLETED ? cn.text : ''}>
-                {value}
+        <div className={cn.item} onClick={() => onStatusChange(item.id)}>
+            <input
+                type="radio"
+                onChange={() => onStatusChange(item.id)}
+                checked={item.status === FilterStatuses.COMPLETED}
+            />
+            <div className={item.status === FilterStatuses.COMPLETED ? cn.text : ""}>
+                {item.value}
             </div>
         </div>
     );

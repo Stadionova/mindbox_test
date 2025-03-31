@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {ToDoItemsList} from "../../entities";
 import {FilterStatuses, Input, Title, validateInput} from "shared";
@@ -8,26 +8,52 @@ import {ItemProps} from "shared/types/types";
 import cn from "./Main.module.scss";
 
 export const Main = () => {
-    const [list, setList] = useState<ItemProps[]>([])
-    const [inputValue, setInputValue] = useState<string>('')
+    const [list, setList] = useState<ItemProps[]>([]);
+    const [updatedList, setUpdatedList] = useState<ItemProps[]>([]);
+    const [inputValue, setInputValue] = useState<string>('');
+    const [activeFilter, setActiveFilter] = useState<string>(FilterStatuses.ALL);
+
+    const setFilteredTodoList = (items: ItemProps[], status: string) => {
+        if (status === FilterStatuses.ALL) {
+            setUpdatedList(items);
+        } else {
+            setUpdatedList(items.filter((item) => item.status === status));
+        }
+    };
 
     const onEnterClick = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
-            validateInput(inputValue) && setList([...list, {value: inputValue, status: FilterStatuses.ACTIVE}])
-            setInputValue('')
+        if (event.key === "Enter" && validateInput(inputValue)) {
+            const newItem = {id: Date.now(), value: inputValue, status: FilterStatuses.ACTIVE};
+            setList([...list, newItem]);
+            setInputValue('');
         }
-    }
+    };
+
+
+    const onFilterClick = (status: string) => {
+        setActiveFilter(status);
+    };
+
+    const onStatusChange = (id: number) => {
+        const newList = list.map((item) =>
+            item.id === id ? {
+                ...item,
+                status: item.status === FilterStatuses.ACTIVE ? FilterStatuses.COMPLETED : FilterStatuses.ACTIVE
+            } : item
+        );
+        setList(newList);
+    };
 
     useEffect(() => {
-        console.log('list ', list)
-    }, [list])
+        setFilteredTodoList(list, activeFilter);
+    }, [list, activeFilter]);
 
     return (
         <div className={cn.main}>
-            <Title text='todos'/>
+            <Title text="todos"/>
             <Input setValue={setInputValue} value={inputValue} onClick={onEnterClick}/>
-            <ToDoItemsList list={list} setList={setList}/>
-            <Filters/>
+            <ToDoItemsList list={updatedList} onStatusChange={onStatusChange}/>
+            <Filters onFilterClick={onFilterClick}/>
         </div>
     );
 };

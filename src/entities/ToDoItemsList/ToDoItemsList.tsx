@@ -5,12 +5,12 @@ import {ToDoItemsListProps} from "shared/types/types";
 
 import cn from "./ToDoItemsList.module.scss";
 
-export const ToDoItemsList = ({list, setList}: ToDoItemsListProps) => {
+export const ToDoItemsList = ({list, onStatusChange}: ToDoItemsListProps) => {
     return (
         <div className={cn.list}>
-            {list.map((item, index) => (
-                <EachToDoItem key={index} item={item} id={index} list={list} setList={setList}/>
+            {list.map((item) => (
+                <EachToDoItem key={item.id} id={item.id} item={item} onStatusChange={onStatusChange}/>
             ))}
         </div>
-    )
-}
+    );
+};
