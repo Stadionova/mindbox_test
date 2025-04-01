@@ -7,7 +7,7 @@ import cn from "./ToDoItemsList.module.scss";
 
 export const ToDoItemsList = ({list, onStatusChange}: ToDoItemsListProps) => {
     return (
-        <div className={cn.list}>
+        <div className={list.length > 0 ? cn.list : ''}>
             {list.map((item) => (
                 <EachToDoItem key={item.id} id={item.id} item={item} onStatusChange={onStatusChange}/>
             ))}
