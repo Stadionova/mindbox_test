@@ -1,7 +1,7 @@
 .item {
   display: flex;
   align-items: center;
-  padding: 12px 5px;
+  padding: 12px 15px 12px 5px;
   margin-bottom: 10px;
   background-color: #e8eaf6;
   border-radius: 6px;
@@ -11,6 +11,11 @@
 
   div {
     margin-left: 5px;
+    word-break: break-word;
+  }
+
+  input {
+    flex-shrink: 0;
   }
 }
 
