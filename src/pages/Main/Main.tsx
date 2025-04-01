@@ -13,15 +13,14 @@ export const Main = () => {
         return savedList ? JSON.parse(savedList) : [];
     });
 
-    const [updatedList, setUpdatedList] = useState<ItemProps[]>([]);
     const [inputValue, setInputValue] = useState<string>('');
     const [activeFilter, setActiveFilter] = useState<string>(FilterStatuses.ALL);
 
-    const setFilteredTodoList = (items: ItemProps[], status: string) => {
+    const setFilteredTodoList = (status: string) => {
         if (status === FilterStatuses.ALL) {
-            setUpdatedList(items);
+            return list;
         } else {
-            setUpdatedList(items.filter((item) => item.status === status));
+            return list.filter((item) => item.status === status);
         }
     };
 
@@ -48,9 +47,7 @@ export const Main = () => {
         );
     };
 
-    useEffect(() => {
-        setFilteredTodoList(list, activeFilter);
-    }, [list, activeFilter]);
+    const filteredList = setFilteredTodoList(activeFilter);
 
     useEffect(() => {
         localStorage.setItem("todoList", JSON.stringify(list));
@@ -62,7 +59,7 @@ export const Main = () => {
                 <div className={cn.main}>
                     <Title text="todos"/>
                     <Input setValue={setInputValue} value={inputValue} onClick={onEnterClick}/>
-                    <ToDoItemsList list={updatedList} onStatusChange={onStatusChange}/>
+                    <ToDoItemsList list={filteredList} onStatusChange={onStatusChange}/>
                     <Filters onFilterClick={onFilterClick}/>
                 </div>
             </div>
