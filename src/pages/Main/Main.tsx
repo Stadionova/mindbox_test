@@ -28,7 +28,7 @@ export const Main = () => {
     const onEnterClick = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter" && validateInput(inputValue)) {
             const newItem = {id: Date.now(), value: inputValue, status: FilterStatuses.ACTIVE};
-            setList((prevList) => [...prevList, newItem]);
+            setList((prevList) => [newItem, ...prevList]);
             setInputValue('');
         }
     };
@@ -57,11 +57,15 @@ export const Main = () => {
     }, [list]);
 
     return (
-        <div className={cn.main}>
-            <Title text="todos"/>
-            <Input setValue={setInputValue} value={inputValue} onClick={onEnterClick}/>
-            <ToDoItemsList list={updatedList} onStatusChange={onStatusChange}/>
-            <Filters onFilterClick={onFilterClick}/>
+        <div className={cn.wrapper}>
+            <div className={cn.resizableContainer}>
+                <div className={cn.main}>
+                    <Title text="todos"/>
+                    <Input setValue={setInputValue} value={inputValue} onClick={onEnterClick}/>
+                    <ToDoItemsList list={updatedList} onStatusChange={onStatusChange}/>
+                    <Filters onFilterClick={onFilterClick}/>
+                </div>
+            </div>
         </div>
     );
 };

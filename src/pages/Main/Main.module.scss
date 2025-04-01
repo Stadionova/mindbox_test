@@ -1,11 +1,25 @@
-.main {
-  width: 300px;
-  box-sizing: border-box;
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: fit-content;
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  .resizableContainer {
+    width: 600px;
+    height: 540px;
+    resize: both;
+    overflow: auto;
+    border: 2px solid #ccc;
+    position: relative;
+
+    .main {
+      width: 100%;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+  }
 }
