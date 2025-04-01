@@ -8,7 +8,11 @@ import {ItemProps} from "shared/types/types";
 import cn from "./Main.module.scss";
 
 export const Main = () => {
-    const [list, setList] = useState<ItemProps[]>([]);
+    const [list, setList] = useState<ItemProps[]>(() => {
+        const savedList = localStorage.getItem("todoList");
+        return savedList ? JSON.parse(savedList) : [];
+    });
+
     const [updatedList, setUpdatedList] = useState<ItemProps[]>([]);
     const [inputValue, setInputValue] = useState<string>('');
     const [activeFilter, setActiveFilter] = useState<string>(FilterStatuses.ALL);
@@ -24,29 +28,33 @@ export const Main = () => {
     const onEnterClick = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter" && validateInput(inputValue)) {
             const newItem = {id: Date.now(), value: inputValue, status: FilterStatuses.ACTIVE};
-            setList([...list, newItem]);
+            setList((prevList) => [...prevList, newItem]);
             setInputValue('');
         }
     };
-
 
     const onFilterClick = (status: string) => {
         setActiveFilter(status);
     };
 
     const onStatusChange = (id: number) => {
-        const newList = list.map((item) =>
-            item.id === id ? {
-                ...item,
-                status: item.status === FilterStatuses.ACTIVE ? FilterStatuses.COMPLETED : FilterStatuses.ACTIVE
-            } : item
+        setList((prevList) =>
+            prevList.map((item) =>
+                item.id === id ? {
+                    ...item,
+                    status: item.status === FilterStatuses.ACTIVE ? FilterStatuses.COMPLETED : FilterStatuses.ACTIVE
+                } : item
+            )
         );
-        setList(newList);
     };
 
     useEffect(() => {
         setFilteredTodoList(list, activeFilter);
     }, [list, activeFilter]);
+
+    useEffect(() => {
+        localStorage.setItem("todoList", JSON.stringify(list));
+    }, [list]);
 
     return (
         <div className={cn.main}>
